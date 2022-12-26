@@ -1,0 +1,39 @@
+{
+	"name": "Twitch Notification",
+	"description": "Уведомления о новых сообщениях в чате!",
+	"version": "0.9",
+	"host_permissions": ["https://www.twitch.tv/*"], 
+	"background":
+	{
+		"service_worker": "background.js"
+	},
+	"permissions": 
+	[
+		"storage", "activeTab", "tabs", "scripting"
+	],
+	"content_scripts": 
+	[
+		{ 
+		  "matches": ["https://www.twitch.tv/*"], 
+		  "js": ["contentScript.js"],
+		  "run_at": "document_end"
+		}
+	],
+	"action": 
+	{
+		"default_popup": "/html/popup.html"
+	},
+	"web_accessible_resources":
+	[
+		{
+			"resources":
+			[
+				"res/sound1.mp3"
+			],
+			"matches": [
+				"<all_urls>"
+			  ]
+		}
+	],
+	"manifest_version":3
+}
