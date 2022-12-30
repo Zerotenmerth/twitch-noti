@@ -3,19 +3,27 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     {
         CheckActiveTimer();
     }
+    if(message=="ChangeSound")
+    {
+        LoadPathOfSoundFile();
+    }
 });
+let audio = new Audio();
+LoadPathOfSoundFile();
+async function LoadPathOfSoundFile()
+{
+    let fileNameOfAlert = await GetDataFromStorage("fileNameOfAlert");
+    audio.src=chrome.runtime.getURL(`./res/${fileNameOfAlert}`);
+}
+
 function Global()
 {
-    let audio = new Audio();
-    audio.src = chrome.runtime.getURL(`./res/sound1.mp3`);
-
     let countPrevious =document.getElementsByClassName('text-fragment').length;
     function CheckMsgs()
     {
         let countNow =document.getElementsByClassName('text-fragment').length;
         if(countPrevious!=countNow)
         {
-            console.log('Alert');
             audio.play();
             countPrevious=countNow;
         }
@@ -30,14 +38,13 @@ async function CheckActiveTimer()
     let result = await GetDataFromStorage("ourTimer");
     if(result==null)
     {
-        alert('Таймер активен!');
         Global();
     }
     else 
     {
         clearInterval(result);
         SetDataToStorage({"ourTimer": null});
-        alert('Таймер убран');
+        alert('Scanning disabled!');
     }
 } 
 

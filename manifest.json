@@ -1,8 +1,9 @@
 {
 	"name": "Twitch Notification",
 	"description": "Уведомления о новых сообщениях в чате!",
-	"version": "1.0",
-	"host_permissions": ["https://www.twitch.tv/*"], 
+	"author": "Golden Dragon",
+	"version": "1.1",
+	"host_permissions": ["https://www.twitch.tv/*"],
 	"background":
 	{
 		"service_worker": "background.js"
@@ -35,7 +36,8 @@
 		{
 			"resources":
 			[
-				"res/sound1.mp3"
+				"res/mainAlert.mp3",
+				"res/extraAlert.mp3"
 			],
 			"matches": [
 				"<all_urls>"

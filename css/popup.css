@@ -1,0 +1,12 @@
+body{
+    width: 300px;
+    padding: 0px;
+    margin: 0px;
+}
+#alertP
+{
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
