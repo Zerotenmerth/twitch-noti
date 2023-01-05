@@ -17,7 +17,14 @@ async function AllTogether()
     }else
     {
         setImg = document.querySelector('#settingImg');
-        GetDataFromStorage("setImgPath").then(path=>setImg.src=path);
+        GetDataFromStorage("setImgPath").then(path=>{
+            if(path!=null)
+            setImg.src=path;
+            else{
+                SetDataToStorage({"setImgPath": '../img/OnBtnNonActive.png'});
+                setImg.src='../img/OnBtnNonActive.png';
+            }
+        });
         setImg.addEventListener('click', function(){
             ChangeImgPath();
             ActiveScanning();
@@ -58,18 +65,21 @@ function ActiveScanning()
         });  
 }
 
-function ChangeImgPath()
+async function ChangeImgPath()
 {
-    if(setImg.src.includes('On'))
+    if(setImg.src.includes('Non'))
     { 
-        setImg.src='../img/OffBtn.png';
+        setImg.src='../img/OnBtnActive.png';
         SetDataToStorage({"setImgPath": setImg.src});
     }
     
     else 
     {
         SetDataToStorage({"indexOfActiveRadioBtn": 0});
-        setImg.src='../img/OnBtn.png';
+        SetDataToStorage({"fileNameOfAlert": radBtns[0].value});
+        const tab = await getCurrentTab();
+        chrome.tabs.sendMessage(tab.id, "ChangeSound");  
+        setImg.src='../img/OnBtnNonActive.png'
         SetDataToStorage({"setImgPath": setImg.src});
     }
 }
